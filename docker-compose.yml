@@ -1,0 +1,75 @@
+version: '2.1'
+services:
+
+  consul:
+    image: consul:${CONSUL_VERSION}
+    container_name: consul_server
+    healthcheck:
+        test: ["CMD", "wget", "http://localhost:8500"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
+    volumes:
+      - ${CONSUL_DATA_DIR}/config:/consul/config
+      - ${CONSUL_DATA_DIR}/data:/consul/data
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+    command: agent -server -bind=0.0.0.0 -client 0.0.0.0 -bootstrap -ui
+
+  vault:
+    container_name: vault_server
+    image: vault:${VAULT_VERSION}
+    healthcheck:
+        test: ["CMD", "wget", "http://127.0.0.1:8200"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    environment:
+      VAULT_ADDR: 'http://127.0.0.1:8200'
+      VAULT_LOCAL_CONFIG: '{"backend": {"consul": {"address": "consul:8500", "advertise_addr": "http://127.0.0.1:8200", "path" : "vault", "scheme": "http"}}, "listener": { "tcp": { "address": "0.0.0.0:8200", "tls_disable": 1 } }, "default_lease_ttl": "168h", "max_lease_ttl": "720h", "disable_mlock": true}'
+    volumes:
+      - ${VAULT_DATA_DIR}/config:/vault/config
+      - ${VAULT_DATA_DIR}/file:/vault/file
+    ports:
+      - "${VAULT_PORT}:8200"
+    depends_on:
+      - consul
+    links:
+      - consul
+    command: server
+
+  jenkins:
+    container_name: jenkins_server
+    image: jenkins/server:${JENKINS_IMAGE_VERSION}
+    build: .
+    healthcheck:
+        test: ["CMD", "wget", "http://localhost:8080/login"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    ports:
+      - "${JENKINS_SERVER_PORT}:8080"
+    volumes:
+      - ${JENKINS_DATA_DIR}/home:/var/jenkins_home
+    links:
+      - vault
+    environment:
+      - JENKINS_ADMIN_USER
+      - JENKINS_ADMIN_PASS
+      - JENKINS_ADMIN_ADDR
+      - JENKINS_SERVER_PORT
+      - JENKINS_IMAGE_VERSION
+      - JENKINS_DATA_DIR
+      - JENKINS_EXECUTORS
+      - JENKINS_GIT_NAME
+      - JENKINS_GIT_EMAIL
+      - JENKINS_SLAVE_AGENT_PORT
+      - JENKINS_QUIET_PERIOD
+      - VAULT_ADDR
+      - VAULT_TOKEN
+      - JENKINS_GIT_NAME=${JENKINS_ADMIN_USER}
+      - JENKINS_GIT_EMAIL=${JENKINS_ADMIN_ADDR}
