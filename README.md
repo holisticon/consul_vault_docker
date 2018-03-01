@@ -1,11 +1,19 @@
 # Showcase for Jenkins, Consul and Vault
 
+[![Build Status](https://travis-ci.org/holisticon/consul_vault_docker.svg?branch=master)](https://travis-ci.org/holisticon/consul_vault_docker)
+
 ![Compose Visualization](https://raw.githubusercontent.com/holisticon/consul_vault_docker/master/docker-compose.png "Visualization of Compose")
 
 
 Consul and Vault are started together in two separate, but linked, docker containers.
 
 Vault is configured to use a `consul` [secret backend](https://www.vaultproject.io/docs/secrets/consul/).
+
+
+## Requirements
+
+* Docker 17+
+* cygwin/bash on Windows
 
 ## Usage
 
@@ -16,6 +24,8 @@ Start images:
 
 >NOTES: The unseal is done automatically per intention to ease setup.
 >**Do not use in production!**
+
+Login for Jenkins at http://localhost:8080 is admin / admin
 
 ## Background
 
