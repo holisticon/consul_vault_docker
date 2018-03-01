@@ -5,5 +5,5 @@ language: python
 services:
   - docker
 
-  script:
-    - ./docker-build.sh
+script:
+  - ./docker-build.sh
