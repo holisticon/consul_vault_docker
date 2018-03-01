@@ -24,5 +24,5 @@ USER jenkins
 ENV JENKINS_USER admin
 ENV JENKINS_PASS admin
 
-COPY groovy_init/init.groovy /usr/share/jenkins/ref/init.groovy.d/init.groovy
-COPY config/jenkins /usr/share/jenkins/ref/config
+COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/init.groovy
+COPY config /usr/share/jenkins/ref/config

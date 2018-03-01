@@ -45,7 +45,7 @@ services:
   jenkins:
     container_name: jenkins_server
     image: jenkins/server:${JENKINS_IMAGE_VERSION}
-    build: .
+    build: docker/src/jenkins/
     healthcheck:
         test: ["CMD", "wget", "http://localhost:8080/login"]
         interval: 30s

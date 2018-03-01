@@ -1,2 +1,2 @@
 .cache/
-docker/container/**/*
+docker/build/container/*

@@ -61,11 +61,6 @@ mailer(
     replyto_addr = env['JENKINS_REPLYTO_ADDR'],
     email_suffix = env['JENKINS_EMAIL_SUFFIX']
   )
-master_slave_security(
-    instance = j,
-    home     = home,
-    disabled = false
-)
 matrix_authorization(
     instance      = j,
     user_mappings = creds
