@@ -35,7 +35,7 @@ authenticated,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,
 system_message(
     instance = j,
     html = true,
-    message = "Welcome to <b>Packt Jenkins Server</b>"
+    message = "Welcome to our <b>Jenkins Server</b>"
 )
 admin_email(
     instance = j,

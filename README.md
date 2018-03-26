@@ -29,6 +29,10 @@ Login for Jenkins at http://localhost:8080 is admin / admin
 
 ## Background
 
+### Persistence
+
+All the runtime data of docker is saved under `runtime/docker`
+
 ### Initial Config
 
 The initial config was made by logging in the image:

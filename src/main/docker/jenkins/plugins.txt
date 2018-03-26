@@ -60,6 +60,7 @@ github-branch-source
 gradle
 greenballs
 handlebars
+hashicorp-vault-plugin
 htmlpublisher
 icon-shim
 jackson2-api
