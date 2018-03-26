@@ -5,5 +5,8 @@ language: python
 services:
   - docker
 
-script:
+before_install:
   - ./docker-build.sh
+
+script:
+  - ./mvnw clean install
