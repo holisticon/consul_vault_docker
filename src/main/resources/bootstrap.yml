@@ -1,6 +1,8 @@
 spring:
+    application:
+        name: vault-demo
     cloud:
-        # Configuration for a vault server running in dev mode
+        # Configuration for a vault server
         vault:
             scheme: http
             host: localhost
@@ -8,8 +10,8 @@ spring:
             connection-timeout: 5000
             read-timeout: 15000
             authentication: TOKEN
-            token: 00000000-0000-0000-0000-000000000000
+            token: a35c086a-6faf-8d35-2bed-8cedec6debd1
 
-logging:
-    level:
-        ROOT: WARN
+admin:
+  user: to-be-overwritten-by-vault-value
+  password: to-be-overwritten-by-vault-value

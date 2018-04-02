@@ -17,15 +17,51 @@ Vault is configured to use a `consul` [secret backend](https://www.vaultproject.
 
 ## Usage
 
-Start images:
+Setup images:
 ```
-./docker-run.sh
+./docker-setup.sh 
 ```
+
+Afterwards you can use `./docker-run.sh` without resetting the data
 
 >NOTES: The unseal is done automatically per intention to ease setup.
 >**Do not use in production!**
 
 Login for Jenkins at http://localhost:8080 is admin / admin
+
+To use the "fake" production vault server via CLI add a bash alias:
+```
+alias vault='docker exec -it vault_server vault "$@"'
+```
+Look at `docker-setup.sh` for an example
+
+## Advanced Usage
+
+Command below starts a Vault server in dev mode with a known initial root token that we can use for dev and tests and listening on http://localhost:8200
+
+```
+vault server -dev -log-level=INFO -dev-root-token-id=00000000-0000-0000-0000-000000000000
+```
+
+Before using the CLI to configure the vault, you must set this environment variable:
+
+```
+export VAULT_ADDR=http://localhost:8200
+```
+
+Add some secret application properties.
+
+```
+# default application, default profile
+vault write secret/application spring.datasource.username=default-user spring.datasource.password=default-pass
+
+# demo application, default profile
+vault write secret/vault-demo spring.datasource.username=demo-user spring.datasource.password=demo-pass
+
+# demo application, dev profile
+vault write secret/vault-demo/dev spring.datasource.username=demo-user-dev spring.datasource.password=demo-pass-dev
+
+```
 
 ## Background
 

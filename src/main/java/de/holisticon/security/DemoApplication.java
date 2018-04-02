@@ -1,16 +1,14 @@
 package de.holisticon.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.sql.SQLException;
 
 
+// tag::maven-spring-cloud-vault-include[]
 @SpringBootApplication
 @Slf4j
 public class DemoApplication {
@@ -18,32 +16,22 @@ public class DemoApplication {
   @Value("${spring.profiles.active:#{null}}")
   private String profiles;
 
-  @Value("${spring.datasource.username}")
-  private String username;
+  @Value("${admin.user}")
+  private String user;
 
-  @Value("${spring.datasource.password}")
+  @Value("${admin.password}")
   private String password;
-
-  @Value("${other.username}")
-  private String other;
-
-  @Autowired
-  private DataSource dataSource;
-
+  // end::maven-spring-cloud-vault-include[]
   public static void main(String[] args) {
     SpringApplication.run(DemoApplication.class, args);
   }
 
   @PostConstruct
-  private void postConstruct() throws SQLException {
+  private void postConstruct() {
     log.debug("##########################");
     log.debug("profile(s): " + profiles);
-    log.debug("username: " + username);
+    log.debug("user: " + user);
     log.debug("password: " + password);
-    log.debug("other: " + other);
-
-    dataSource.getConnection();
-    log.debug("Successfully connected to database");
     log.debug("##########################");
   }
 

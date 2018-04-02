@@ -34,7 +34,6 @@ cloudbees-folder
 command-launcher
 conditional-buildstep
 config-file-provider
-copy-to-slave
 copyartifact
 credentials
 credentials-binding

@@ -23,6 +23,8 @@ services:
   vault:
     container_name: vault_server
     image: vault:${VAULT_VERSION}
+    cap_add:
+      - IPC_LOCK
     healthcheck:
         test: ["CMD", "wget", "http://127.0.0.1:8200"]
         interval: 30s
