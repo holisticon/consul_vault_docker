@@ -2,7 +2,7 @@
 runtime/
 target/
 !.mvn/wrapper/maven-wrapper.jar
-
+*.dot
 
 ### STS ###
 .apt_generated
@@ -25,5 +25,3 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
-

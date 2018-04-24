@@ -19,7 +19,7 @@ Vault is configured to use a `consul` [secret backend](https://www.vaultproject.
 
 Setup images:
 ```
-./docker-setup.sh 
+./docker-setup.sh
 ```
 
 Afterwards you can use `./docker-run.sh` without resetting the data
@@ -215,5 +215,7 @@ value           	behind-super-secret-password
 
 ### Update docker-compose.png
 ```
-docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m image docker-compose.yml
+docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m dot docker-compose.yml
+cat docker-compose.dot | dot  -Tpng -Gdpi=600 > docker-compose.png
+rm docker-compose.dot
 ```
